@@ -11,16 +11,16 @@ import (
 )
 
 type RequestsMaker struct {
-	Addresses     []string
-	ParallelCount int
+	addresses     []string
+	parallelCount int
 
 	client *http.Client
 }
 
 func NewRequestsMaker(addresses []string, parallelCount int) *RequestsMaker {
 	return &RequestsMaker{
-		Addresses:     addresses,
-		ParallelCount: parallelCount,
+		addresses:     addresses,
+		parallelCount: parallelCount,
 
 		client: &http.Client{
 			Timeout: time.Second * 5,
@@ -29,14 +29,14 @@ func NewRequestsMaker(addresses []string, parallelCount int) *RequestsMaker {
 }
 
 func (t *RequestsMaker) Run() {
-	addrChan := make(chan string, t.ParallelCount)
+	addrChan := make(chan string, t.parallelCount)
 	defer close(addrChan)
 
 	wt := &sync.WaitGroup{}
 
-	wt.Add(len(t.Addresses))
+	wt.Add(len(t.addresses))
 
-	for _, addr := range t.Addresses {
+	for _, addr := range t.addresses {
 		go func(addr string) {
 			addrChan <- addr
 
@@ -72,16 +72,8 @@ func processAddress(client *http.Client, addr string) {
 		return
 	}
 
-	hashMd5 := md5.New()
-
-	_, err = hashMd5.Write(bytes)
-	if err != nil {
-		fmt.Printf("%v error in writing hash\n", addr)
-		return
-	}
-
-	hashData := hashMd5.Sum(nil)
-	fmt.Printf("%v %x\n", addr, hashData)
+	hashData := hashBytes(bytes)
+	printResult(addr, hashData)
 }
 
 const httpScheme = "http"
@@ -97,4 +89,19 @@ func getUrl(addr string) (*url.URL, error) {
 	}
 
 	return uri, nil
+}
+
+func hashBytes(bytes []byte) []byte {
+	hashMd5 := md5.New()
+
+	_, err := hashMd5.Write(bytes)
+	if err != nil {
+		return nil
+	}
+
+	return hashMd5.Sum(nil)
+}
+
+func printResult(addr string, hashData []byte) {
+	fmt.Printf("%v %x\n", addr, hashData)
 }
