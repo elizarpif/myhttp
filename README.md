@@ -10,8 +10,9 @@ The tool can accept a flag to indicate this limit, and it defaults to 10 if the 
 
 ## As info
 
-1) Timeout. Http-requests have a timeout in 5 seconds
+1) Flags. The tool has flag `parallel`, it accepts only unsigned int value
 2) Errors. If tool gets an error, only address will be printed
+3) Timeout. Http-requests have a timeout of 5 seconds
 
 ### Example of work
 
