@@ -8,7 +8,7 @@ import (
 func getParallelReqsCount() int {
 	var parallelReqsCount int
 
-	flag.IntVar(&parallelReqsCount, "parallel", 10, "max number of requests")
+	flag.IntVar(&parallelReqsCount, "parallel", 10, "max number of parallel requests")
 	flag.Parse()
 
 	return parallelReqsCount
