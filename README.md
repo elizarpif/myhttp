@@ -11,7 +11,7 @@ The tool can accept a flag to indicate this limit, and it defaults to 10 if the 
 ## As info
 
 1) Timeout. Http-requests have a timeout in 5 seconds
-2) Errors. If tool gets an error, the error is printed with address
+2) Errors. If tool gets an error, only address will be printed
 
 ### Example of work
 
@@ -19,7 +19,7 @@ The tool can accept a flag to indicate this limit, and it defaults to 10 if the 
 ./myhttp -parallel 3 adjust.com google.com facebook.com yahoo.com yandex.com twitter.com reddit.com/r/funny reddit.com/r/notfunny baroquemusiclibrary.com baoooooooooooo.com
 ```
 ```
-baoooooooooooo.com error while making http request
+baoooooooooooo.com
 adjust.com fe3dd0d3ace543820dcc378bc85efe42
 facebook.com 3684c2e12b08e342c36c2eb61adf3410
 yandex.com 8be5dc4e9f35e32ddbfc1bb59cfd973a

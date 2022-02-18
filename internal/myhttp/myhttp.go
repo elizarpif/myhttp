@@ -45,35 +45,32 @@ func (t *RequestsMaker) Run() {
 				<-addrChan
 			}()
 
-			processAddress(t.client, addr)
+			res := getHashResponse(t.client, addr)
+			printResult(addr, res)
 		}(addr)
 	}
 
 	wt.Wait()
 }
 
-func processAddress(client *http.Client, addr string) {
+func getHashResponse(client *http.Client, addr string) []byte {
 	uri, err := getUrl(addr)
 	if err != nil {
-		fmt.Printf("%v error parsing url\n", addr)
-		return
+		return nil
 	}
 
 	resp, err := client.Get(uri.String())
 	if err != nil {
-		fmt.Printf("%v error while making http request\n", addr)
-		return
+		return nil
 	}
 	defer resp.Body.Close()
 
 	bytes, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
-		fmt.Printf("%v error in response reading\n", addr)
-		return
+		return nil
 	}
 
-	hashData := hashBytes(bytes)
-	printResult(addr, hashData)
+	return hashBytes(bytes)
 }
 
 const httpScheme = "http"
