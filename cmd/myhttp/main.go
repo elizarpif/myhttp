@@ -5,10 +5,10 @@ import (
 	"myhttp/internal/myhttp"
 )
 
-func getParallelReqsCount() int {
-	var parallelReqsCount int
+func getParallelReqsCount() uint {
+	var parallelReqsCount uint
 
-	flag.IntVar(&parallelReqsCount, "parallel", 10, "max number of parallel requests")
+	flag.UintVar(&parallelReqsCount, "parallel", 10, "max number of parallel requests")
 	flag.Parse()
 
 	return parallelReqsCount

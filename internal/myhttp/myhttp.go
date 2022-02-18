@@ -12,12 +12,12 @@ import (
 
 type RequestsMaker struct {
 	addresses     []string
-	parallelCount int
+	parallelCount uint
 
 	client *http.Client
 }
 
-func NewRequestsMaker(addresses []string, parallelCount int) *RequestsMaker {
+func NewRequestsMaker(addresses []string, parallelCount uint) *RequestsMaker {
 	return &RequestsMaker{
 		addresses:     addresses,
 		parallelCount: parallelCount,
