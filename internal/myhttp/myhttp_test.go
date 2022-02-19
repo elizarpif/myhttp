@@ -99,14 +99,13 @@ func Test_getHashResponse(t *testing.T) {
 			want: "5d41402abc4b2a76b9719d911017c592",
 		},
 		{
-			name: "mock no response for 3 sec",
+			name: "mock bad status",
 			args: args{
 				client: client,
 				server: func() *httptest.Server {
 					s := httptest.NewServer(
 						http.HandlerFunc(func(w http.ResponseWriter, _ *http.Request) {
-							w.Write([]byte("hello"))
-							time.Sleep(time.Second * 3)
+							w.WriteHeader(http.StatusBadGateway)
 						}),
 					)
 					return s
