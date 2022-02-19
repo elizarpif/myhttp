@@ -41,8 +41,8 @@ func (t *RequestsMaker) Run() {
 			addrChan <- addr
 
 			defer func() {
-				wt.Done()
 				<-addrChan
+				wt.Done()
 			}()
 
 			res := getHashResponse(t.client, addr)
